@@ -9,13 +9,30 @@ import java.util.Optional;
 public class StudentService {
     @Autowired
     final private StudentRepo studentRepo;
+    final private CourseRepo courseRepo;
 
-    public StudentService(StudentRepo studentRepo) {
+    public StudentService(StudentRepo studentRepo, CourseRepo courseRepo) {
         this.studentRepo = studentRepo;
+        this.courseRepo = courseRepo;
     }
 
-    public Student saveStudent(Student student){
-        this.studentRepo.save(student);
+    public StudentDTO saveStudent(StudentDTO student){
+        Course course = courseRepo.findById(student.getCourse_id()).orElseThrow(() -> new RuntimeException("Course not found"));
+//        Student studentObj = new Student();
+//        studentObj.setAge(student.getAge());
+//        studentObj.setName(student.getName());
+//        studentObj.setDob(student.getDob());
+//        studentObj.setEmail(student.getEmail());
+//        studentObj.setCourse(course);
+
+        Student studentBuilder = Student.builder()
+                .name(student.getName())
+                .age(student.getAge())
+                .dob(student.getDob())
+                .email(student.getEmail())
+                .build();
+
+        this.studentRepo.save(studentBuilder);
         return student;
     }
 

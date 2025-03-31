@@ -16,11 +16,13 @@ import java.util.Optional;
 public class StudentController {
 private final StudentRepo studentRepo;
 private final StudentService studentService;
+private final CourseRepo courseRepo;
 
 @Autowired
-    public StudentController(StudentRepo studentRepo, StudentService studentService) {
+    public StudentController(StudentRepo studentRepo, StudentService studentService, CourseRepo courseRepo) {
         this.studentRepo = studentRepo;
         this.studentService = studentService;
+        this.courseRepo = courseRepo;
 }
 
     @GetMapping(path = "/name/{name}")
@@ -47,7 +49,7 @@ private final StudentService studentService;
     }
 
     @PostMapping
-    public Student saveStudent(@RequestBody Student student){
+    public StudentDTO saveStudent(@RequestBody StudentDTO student){
         studentService.saveStudent(student);
         return student;
     }
@@ -65,4 +67,8 @@ private final StudentService studentService;
         return new ResponseEntity<>(errorMessage, HttpStatus.BAD_REQUEST);
     }
 
+    @PostMapping(path = "/addcourse")
+    public void addCourse(@RequestBody Course course){
+        courseRepo.save(course);
+    }
 }

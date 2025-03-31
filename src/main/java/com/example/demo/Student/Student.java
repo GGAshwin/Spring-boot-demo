@@ -8,6 +8,7 @@ import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToMany;
 import jakarta.persistence.ManyToOne;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -15,6 +16,7 @@ import lombok.Setter;
 
 import java.time.LocalDate;
 
+@Builder
 @Entity
 @Data
 @Getter
@@ -54,4 +56,6 @@ public class Student {
                 ", age=" + age +
                 '}';
     }
+
+
 }
