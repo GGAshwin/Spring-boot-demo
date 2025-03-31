@@ -4,8 +4,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.method.annotation.MethodArgumentTypeMismatchException;
 
 import java.util.List;
+import java.util.Map;
+import java.util.Objects;
 import java.util.Optional;
 
 @RestController
@@ -30,12 +33,12 @@ private final StudentService studentService;
     }
 
     @GetMapping(path = "/{id}")
-    public ResponseEntity<Student> getStudentById(@PathVariable Long id){
+    public ResponseEntity<Object> getStudentById(@PathVariable Long id){
         Optional<Student> studentData = studentService.findById(id);
         if(studentData.isPresent()){
             return new ResponseEntity<>(studentData.get(), HttpStatus.OK);
         }
-        return  new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        return new ResponseEntity<>(Map.of("error","Resource not found"), HttpStatus.NOT_FOUND);
     }
 
     @GetMapping
@@ -54,4 +57,12 @@ private final StudentService studentService;
         studentService.deleteById(id);
         return new ResponseEntity<>("Delete Book with Id "+id, HttpStatus.OK);
     }
+
+    @ExceptionHandler(MethodArgumentTypeMismatchException.class)
+    public ResponseEntity<Object> handleTypeMismatch(MethodArgumentTypeMismatchException ex) {
+        String errorMessage = String.format("Invalid value for parameter '%s': %s", ex.getName(), ex.getValue());
+        System.err.println("Type mismatch error: " + ex.getMessage()); // Logging
+        return new ResponseEntity<>(errorMessage, HttpStatus.BAD_REQUEST);
+    }
+
 }
