@@ -1,7 +1,6 @@
-package com.example.demo.Student;
+package com.example.demo.Student.DTO;
 
 import java.time.LocalDate;
-import java.time.LocalTime;
 import java.util.UUID;
 
 import lombok.AllArgsConstructor;

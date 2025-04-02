@@ -1,9 +1,15 @@
-package com.example.demo.Student;
+package com.example.demo.Student.Service;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;
+
+import com.example.demo.Student.Entity.Course;
+import com.example.demo.Student.Entity.Student;
+import com.example.demo.Student.Repository.CourseRepo;
+import com.example.demo.Student.Repository.StudentRepo;
+import com.example.demo.Student.DTO.StudentDTO;
 
 @Service
 public class StudentService {

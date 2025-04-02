@@ -1,4 +1,4 @@
-package com.example.demo.Student;
+package com.example.demo.Student.Controllers;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -8,8 +8,14 @@ import org.springframework.web.method.annotation.MethodArgumentTypeMismatchExcep
 
 import java.util.List;
 import java.util.Map;
-import java.util.Objects;
 import java.util.Optional;
+
+import com.example.demo.Student.Entity.Course;
+import com.example.demo.Student.Repository.CourseRepo;
+import com.example.demo.Student.Entity.Student;
+import com.example.demo.Student.DTO.StudentDTO;
+import com.example.demo.Student.Repository.StudentRepo;
+import com.example.demo.Student.Service.StudentService;
 
 @RestController
 @RequestMapping(path = "/api/student")
@@ -67,8 +73,4 @@ private final CourseRepo courseRepo;
         return new ResponseEntity<>(errorMessage, HttpStatus.BAD_REQUEST);
     }
 
-    @PostMapping(path = "/addcourse")
-    public void addCourse(@RequestBody Course course){
-        courseRepo.save(course);
-    }
 }
